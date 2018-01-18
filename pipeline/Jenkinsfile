@@ -15,8 +15,8 @@ pipeline{
             post {
                 always {
                     sh "docker-compose down"
-		    sh “docker rmi dc/httpd-hw1"
-		    sh “docker rmi dc/httpd-hw2"
+		    sh "docker rmi dc/httpd-hw1"
+		    sh "docker rmi dc/httpd-hw2"
                 }
             }
         }
