@@ -11,10 +11,11 @@ pipeline{
     stages{
         stage('Deploy Apps') {
             steps {
-                sh "docker-compose up —d"      
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/dcarbajosa/sfhttpd.git']]])
+                sh "docker-compose up -d"      
             }
         }
-        stage('Clean up') {
+    stage('Clean up') {
             steps {
                 input "Exploratory Test"
             }
