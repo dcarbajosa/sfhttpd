@@ -1,6 +1,6 @@
-FROM kitematic/hello-world-nginx:latest
+FROM tutum/hello-world
 
-RUN chmod 777 website_files
+RUN chmod 777 www && rm -rf www/*
 
-COPY app2/index.html website_files
+COPY app2/index.html www
 
