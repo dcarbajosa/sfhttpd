@@ -6,34 +6,17 @@ pipeline{
     }
     stages{
         stage('Deploy Apps') {
-            parallel {
-                stage('Deploy App1') {
-                    steps {
-                        sh "docker build -f infra/app1/Dockerfile -t dc/httpd-hw1:latest ."
-                        sh "docker run -i -t -d --name hw1 -p 8087:80 dc/httpd-hw1:latest"
-                    }
-                }
-                stage('Deploy App2') {
-                    steps {
-                        sh "docker build -f infra/app2/Dockerfile -t dc/httpd-hw2:latest ."
-                        sh "docker run -i -t -d --name hw2 -p 8088:80 dc/httpd-hw2:latest"
-
-                    }
-                }
-            }
-        }
+            sh "docker-compose up —d”        
+	}
         stage('Clean up') {
             steps {
                 input "Exploratory Test"
             }
             post {
                 always {
-                    sh "docker stop hw1"
-                    sh "docker rm hw1"
-                    sh "docker rmi dc/httpd-hw1:latest"
-                    sh "docker stop hw2"
-                    sh "docker rm hw2"
-                    sh "docker rmi dc/httpd-hw2:latest"
+                    sh "docker-compose down”
+		    sh “docker rmi dc/httpd-hw1”
+		    sh “docker rmi dc/httpd-hw2”
                 }
             }
         }
