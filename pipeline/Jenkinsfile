@@ -6,7 +6,7 @@ pipeline{
     }
     stages{
         stage('Deploy Apps') {
-            sh "docker-compose up —d”        
+            sh "docker-compose up —d"      
 	}
         stage('Clean up') {
             steps {
@@ -14,9 +14,9 @@ pipeline{
             }
             post {
                 always {
-                    sh "docker-compose down”
-		    sh “docker rmi dc/httpd-hw1”
-		    sh “docker rmi dc/httpd-hw2”
+                    sh "docker-compose down"
+		    sh “docker rmi dc/httpd-hw1"
+		    sh “docker rmi dc/httpd-hw2"
                 }
             }
         }
