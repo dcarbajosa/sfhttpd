@@ -4,10 +4,16 @@ pipeline{
             label 'master'
         }
     }
+    options {
+        buildDiscarder(logRotator(numToKeepStr:'1'))
+        disableConcurrentBuilds()
+    }
     stages{
         stage('Deploy Apps') {
-            sh "docker-compose up —d"      
-	}
+            steps {
+                sh "docker-compose up —d"      
+            }
+        }
         stage('Clean up') {
             steps {
                 input "Exploratory Test"
@@ -15,8 +21,8 @@ pipeline{
             post {
                 always {
                     sh "docker-compose down"
-		    sh "docker rmi dc/httpd-hw1"
-		    sh "docker rmi dc/httpd-hw2"
+		            sh "docker rmi dc/httpd-hw1"
+		            sh "docker rmi dc/httpd-hw2"
                 }
             }
         }
